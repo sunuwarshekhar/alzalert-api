@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import sequelize from './shared/database/connection.js';
 import { errorHandler } from './shared/utils/http.js';
 import { authMiddleware } from './shared/middleware/auth.js';
+import { fileUploadDriver, getUploadDir, validateStorageConfig } from './shared/storage/index.js';
 import authRoutes from './domains/auth/auth.routes.js';
 import usersRoutes from './domains/users/users.routes.js';
 import patientsRoutes from './domains/patients/patients.routes.js';
@@ -26,6 +27,10 @@ app.get('/api/health', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/upload', uploadRoutes);
 
+if (fileUploadDriver === 'fs') {
+  app.use('/uploads', express.static(getUploadDir()));
+}
+
 app.use(authMiddleware);
 
 app.use('/api/users', usersRoutes);
@@ -37,6 +42,7 @@ app.use(errorHandler);
 
 const start = async () => {
   try {
+    validateStorageConfig();
     await sequelize.authenticate();
     await sequelize.sync();
     console.log('Database connected and synced.');

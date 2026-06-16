@@ -1,6 +1,6 @@
 import { ValidationError } from '../../shared/errors/DomainErrors.js';
 import { accessControl } from '../../shared/accessControl.js';
-import { storageService } from '../../shared/storage.js';
+import { storageService } from '../../shared/storage/index.js';
 
 export const uploadService = {
   async createPresignedUrl(actor, { filename, type }) {

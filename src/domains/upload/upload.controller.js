@@ -8,4 +8,11 @@ export const uploadController = {
     });
     res.json(result);
   },
+
+  uploadFile: async (req, res) => {
+    if (!req.file) {
+      return res.status(400).json({ message: 'No file uploaded' });
+    }
+    res.json({ ok: true });
+  },
 };

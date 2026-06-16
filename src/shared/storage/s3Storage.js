@@ -10,7 +10,7 @@ const client = new S3Client({
   },
 });
 
-export const storageService = {
+export const s3Storage = {
   async createPresignedUpload({ filename, contentType }) {
     const ext = filename.split('.').pop();
     const key = `patients/${uuidv4()}.${ext}`;
@@ -24,6 +24,6 @@ export const storageService = {
     const uploadUrl = await getSignedUrl(client, command, { expiresIn: 60 });
     const fileUrl = `https://${process.env.S3_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${key}`;
 
-    return { uploadUrl, fileUrl };
+    return { uploadUrl, fileUrl, method: 'PUT' };
   },
 };
