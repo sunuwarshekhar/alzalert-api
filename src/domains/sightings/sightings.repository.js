@@ -24,7 +24,7 @@ const mapAlert = (row) =>
         patient_id: row.patient_id,
         created_by: row.created_by,
         status: row.status,
-        last_seen_location: row.last_seen_location,
+        description: row.description,
         created_at: row.created_at,
         resolved_at: row.resolved_at,
         patient: row.patient
@@ -44,6 +44,7 @@ const toDto = (row) => ({
   reported_by: row.reported_by,
   location_text: row.location_text,
   notes: row.notes,
+  image_urls: Array.isArray(row.image_urls) ? row.image_urls : [],
   created_at: row.created_at,
   reporter: row.reporter
     ? { id: row.reporter.id, name: row.reporter.name }

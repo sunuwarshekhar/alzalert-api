@@ -44,7 +44,7 @@ const start = async () => {
   try {
     validateStorageConfig();
     await sequelize.authenticate();
-    await sequelize.sync();
+    await sequelize.sync({ alter: process.env.NODE_ENV !== 'production' });
     console.log('Database connected and synced.');
 
     app.listen(PORT, () => {

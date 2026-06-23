@@ -10,7 +10,7 @@ const router = Router();
 router.get(
   '/presign',
   authMiddleware,
-  requireRoles('admin', 'caregiver'),
+  requireRoles('admin', 'caregiver', 'community'),
   asyncHandler(uploadController.presign)
 );
 
@@ -18,7 +18,7 @@ if (fileUploadDriver === 'fs') {
   router.post(
     '/file',
     authMiddleware,
-    requireRoles('admin', 'caregiver'),
+    requireRoles('admin', 'caregiver', 'community'),
     validateUploadKey,
     (req, res, next) => {
       uploadFileMiddleware(req, res, (err) => {

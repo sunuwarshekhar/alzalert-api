@@ -63,14 +63,14 @@ const seed = async () => {
       patient_id: patientOne.id,
       created_by: yanzi.id,
       status: "active",
-      last_seen_location: "Thamel, Kathmandu",
+      description: "Last seen near Thamel, Kathmandu. Wearing a blue jacket.",
     });
 
     await AlertModel.create({
       patient_id: patientTwo.id,
       created_by: yanzi.id,
       status: "resolved",
-      last_seen_location: "Baneshwor, Kathmandu",
+      description: "Last seen near Baneshwor, Kathmandu. May be confused.",
       resolved_at: new Date(),
     });
 

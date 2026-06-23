@@ -19,7 +19,7 @@ export const alertsService = {
   async createAlert(actor, data) {
     accessControl.assertCanManageAlerts(actor);
 
-    const { patient_id, last_seen_location, status } = data;
+    const { patient_id, description, status } = data;
     if (!patient_id) throw new ValidationError('patient_id is required');
 
     await accessControl.assertCanAccessPatient(patient_id, actor);
@@ -27,7 +27,7 @@ export const alertsService = {
     return alertsRepository.create({
       patient_id,
       created_by: actor.id,
-      last_seen_location: last_seen_location || null,
+      description: description || null,
       status: status || 'active',
     });
   },
@@ -40,10 +40,10 @@ export const alertsService = {
     await accessControl.assertCanAccessAlert(alert, actor);
 
     const updates = {};
-    const { status, last_seen_location } = data;
+    const { status, description } = data;
 
-    if (last_seen_location !== undefined) {
-      updates.last_seen_location = last_seen_location;
+    if (description !== undefined) {
+      updates.description = description;
     }
 
     if (status !== undefined) {

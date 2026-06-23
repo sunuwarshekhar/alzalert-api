@@ -18,7 +18,7 @@ const toDto = (row) => ({
   patient_id: row.patient_id,
   created_by: row.created_by,
   status: row.status,
-  last_seen_location: row.last_seen_location,
+  description: row.description,
   created_at: row.created_at,
   resolved_at: row.resolved_at,
   patient: row.patient

@@ -3,6 +3,8 @@ import { accessControl } from '../../shared/accessControl.js';
 import { sightingsRepository } from './sightings.repository.js';
 import { alertsRepository } from '../alerts/alerts.repository.js';
 
+const MAX_SIGHTING_IMAGES = 3;
+
 export const sightingsService = {
   async listSightings(actor, alertId) {
     if (!alertId) {
@@ -17,10 +19,22 @@ export const sightingsService = {
   },
 
   async createSighting(actor, data) {
-    const { alert_id, location_text, notes } = data;
+    const { alert_id, location_text, notes, image_urls } = data;
 
     if (!alert_id || !location_text?.trim()) {
       throw new ValidationError('alert_id and location_text are required');
+    }
+
+    if (image_urls !== undefined && image_urls !== null) {
+      if (!Array.isArray(image_urls)) {
+        throw new ValidationError('image_urls must be an array');
+      }
+      if (image_urls.length > MAX_SIGHTING_IMAGES) {
+        throw new ValidationError(`At most ${MAX_SIGHTING_IMAGES} images are allowed`);
+      }
+      if (image_urls.some((url) => typeof url !== 'string' || !url.trim())) {
+        throw new ValidationError('Each image URL must be a non-empty string');
+      }
     }
 
     const alert = await alertsRepository.findById(alert_id, { withPatient: true });
@@ -36,6 +50,7 @@ export const sightingsService = {
       reported_by: actor.id,
       location_text,
       notes: notes || null,
+      image_urls: image_urls?.length ? image_urls : [],
     });
   },
 

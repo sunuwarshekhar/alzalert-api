@@ -8,7 +8,7 @@ const AlertModel = sequelize.define(
     patient_id: { type: DataTypes.UUID, allowNull: true },
     created_by: { type: DataTypes.UUID, allowNull: true },
     status: { type: DataTypes.ENUM('active', 'resolved'), defaultValue: 'active' },
-    last_seen_location: { type: DataTypes.TEXT, allowNull: true },
+    description: { type: DataTypes.TEXT, allowNull: true, field: 'last_seen_location' },
     resolved_at: { type: DataTypes.DATE, allowNull: true },
   },
   { tableName: 'alerts', timestamps: true, createdAt: 'created_at', updatedAt: false }

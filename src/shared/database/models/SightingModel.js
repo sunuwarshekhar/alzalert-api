@@ -9,6 +9,7 @@ const SightingModel = sequelize.define(
     reported_by: { type: DataTypes.UUID, allowNull: true },
     location_text: { type: DataTypes.TEXT, allowNull: false },
     notes: { type: DataTypes.TEXT, allowNull: true },
+    image_urls: { type: DataTypes.JSON, allowNull: true, defaultValue: [] },
   },
   { tableName: 'sightings', timestamps: true, createdAt: 'created_at', updatedAt: false }
 );

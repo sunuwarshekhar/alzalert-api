@@ -18,6 +18,13 @@ export const accessControl = {
     if (!canManageUsers(actor.role)) throw new ForbiddenError('Forbidden');
   },
 
+  assertCanUploadFiles(actor) {
+    if (actor.role === 'admin' || actor.role === 'caregiver' || actor.role === 'community') {
+      return;
+    }
+    throw new ForbiddenError('Forbidden');
+  },
+
   getPatientFilter(actor) {
     if (actor.role === 'admin') return {};
     if (actor.role === 'caregiver') return { caregiver_id: actor.id };
