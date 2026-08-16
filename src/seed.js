@@ -27,6 +27,13 @@ const seed = async () => {
       role: "admin",
     });
 
+    const adminTwo = await UserModel.create({
+      name: "Admin",
+      email: "admin@gmail.com",
+      password_hash,
+      role: "admin",
+    });
+
     const yanzi = await UserModel.create({
       name: "Yanzi",
       email: "yanzi@gmail.com",
@@ -91,9 +98,10 @@ const seed = async () => {
     console.log("\nSeed completed successfully!\n");
     console.log("Test accounts (password: password123):");
     console.log("  Admin:     agendra@gmail.com");
+    console.log("  Admin:     admin@gmail.com");
     console.log("  Caregiver: yanzi@gmail.com");
     console.log("  Community: hemant@gmail.com");
-    console.log(`\nAdmin ID: ${admin.id}`);
+    console.log(`\nAdmin IDs: ${admin.id}, ${adminTwo.id}`);
 
     process.exit(0);
   } catch (err) {

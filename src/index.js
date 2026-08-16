@@ -20,10 +20,15 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+const HOST = process.env.HOST || "0.0.0.0";
+
+const corsOrigins = process.env.CORS_ORIGIN
+  ? process.env.CORS_ORIGIN.split(",").map((origin) => origin.trim())
+  : "*";
 
 app.use(
   cors({
-    origin: "*",
+    origin: corsOrigins,
   }),
 );
 app.use(express.json());
@@ -55,8 +60,8 @@ const start = async () => {
     await sequelize.sync({ alter: process.env.NODE_ENV !== "production" });
     console.log("Database connected and synced.");
 
-    app.listen(PORT, () => {
-      console.log(`Server running on http://localhost:${PORT}`);
+    app.listen(PORT, HOST, () => {
+      console.log(`Server running on http://${HOST}:${PORT}`);
     });
   } catch (err) {
     console.error("Failed to start server:", err);
